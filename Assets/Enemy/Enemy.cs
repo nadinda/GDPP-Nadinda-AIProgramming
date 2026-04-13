@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public float ChaseDistance;
     public Player Player;
     [HideInInspector] public NavMeshAgent NavMeshAgent;
+	[HideInInspector] public Animator Animator;
 
 	private void Start()
 	{
@@ -28,6 +29,7 @@ public class Enemy : MonoBehaviour
         _currentState = PatrolState;
         _currentState.EnterState(this);
         NavMeshAgent = GetComponent<NavMeshAgent>();
+        Animator = GetComponent<Animator>();
     }
  
     private void Update()
