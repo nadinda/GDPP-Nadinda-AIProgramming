@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -43,6 +44,12 @@ public class Player : MonoBehaviour
         
         Vector3 movementDirection = horizontalDirection + verticalDirection;
         _rigidBody.velocity = movementDirection * _speed * Time.fixedDeltaTime;
+
+		bool isPressMainMenuInput = Input.GetKeyDown(KeyCode.Escape);
+		if (isPressMainMenuInput)
+		{
+			SceneManager.LoadScene("MainMenu");
+		}
     }
 
 	public void PickPowerUp()
@@ -78,7 +85,9 @@ public class Player : MonoBehaviour
     	{
         	if (collision.gameObject.CompareTag("Enemy"))
         	{
+				StopCoroutine(_powerupCoroutine);
             	collision.gameObject.GetComponent<Enemy>().Dead();
+				SceneManager.LoadScene("WinScreen");
         	}
     	}
 	}
@@ -99,6 +108,7 @@ public class Player : MonoBehaviour
     	else
     	{
         	_health = 0;
+			SceneManager.LoadScene("LoseScreen");
         	Debug.Log("Lose");
     	}
 
